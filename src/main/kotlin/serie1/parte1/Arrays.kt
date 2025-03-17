@@ -20,7 +20,7 @@ fun counter(array: IntArray, k: Int, lower: Int, upper: Int): Pair<Int, Int> {
     var retorno =  Pair(0, 0)
     for (i in 1..k) {
        if (array[i] )
-      }*/
+    }*/
     throw UnsupportedOperationException()
 }
 
