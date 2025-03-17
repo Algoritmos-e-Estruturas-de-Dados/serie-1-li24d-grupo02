@@ -16,6 +16,11 @@ fun findMinDifference(elem1: IntArray, elem2: IntArray): Int {
 }
 
 fun counter(array: IntArray, k: Int, lower: Int, upper: Int): Pair<Int, Int> {
+    /*if (k == 0) return Pair(0, 0)
+    var retorno =  Pair(0, 0)
+    for (i in 1..k) {
+       if (array[i] )
+      }*/
     throw UnsupportedOperationException()
 }
 
