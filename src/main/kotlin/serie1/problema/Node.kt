@@ -1,3 +1,5 @@
+package serie1.problema
+
 /**
  * Represents a node in the heap structure.
  *
