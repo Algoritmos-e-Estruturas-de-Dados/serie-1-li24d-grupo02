@@ -1,36 +1,38 @@
 package serie1.problema
 
-const val FILE_NAME = "something.txt"
-const val PARTITION_SIZE = 100 // some number...
-
 /**
- * Main function to perform external sorting:
- * 1. Divides a large input file into sorted partitions using createSortedPartitions.
- * 2. Performs a k-way merge on the sorted partitions using a min-heap.
- * 3. Writes the fully sorted result back into the original file.
+ * Performs external sorting on a large input file.
  *
- * Assumes:
- * - FILE_NAME is the path to the input file to be sorted.
- * - PARTITION_SIZE defines how many numbers go into each sorted partition.
- * - createReader, createWriter, insert (min-heap), popMin, and Node are defined elsewhere.
+ * Steps:
+ * 1. Splits the input file into smaller sorted partitions using `createSortedPartitions`.
+ * 2. Initializes a min-heap with the smallest element from each partition file.
+ * 3. Repeatedly extracts the minimum value from the heap and writes it to the output.
+ *    - After removing the smallest element, reads the next value from the same file and inserts it into the heap.
+ * 4. Writes the fully sorted sequence to the specified output file.
+ *
+ * Parameters:
+ * - args[0]: Path to the input file to be sorted.
+ * - args[1]: Path to the output file where sorted data will be written.
+ * - args[2]: Partition size, i.e., number of elements per sorted chunk.
  */
-fun main() {
-    val numWays = createSortedPartitions(FILE_NAME, PARTITION_SIZE) // Divide main file into numWays sorted partition files
-    val indexes = IntArray(numWays) { 1 } // Keeps track of how many lines were read from each file
+fun main(args: Array<String>) {
+    val inputFilename = args[0]
+    val outputFilename = args[1]
+    val partitionSize = args[2].toInt()
+
+    val numWays = createSortedPartitions(inputFilename, partitionSize) // Divide main file into numWays sorted partition files
     val readers = Array(numWays) { i -> createReader("${i + 1}.txt") } // One reader for each partition file
     val heap = mutableListOf<Node>() // Min-heap that stores the current smallest values from each file
 
     // Fill heap with the smallest number from each file
     for (i in 0 until numWays) {
         val line = readers[i].readLine()
-        if (line != null) {
-            val value = line.toInt()
-            val newNode = Node(i, value)
-            heap.insert(newNode)
-        }
+        val value = line.toInt()
+        val newNode = Node(i, value)
+        heap.insert(newNode)
     }
 
-    val writer = createWriter(FILE_NAME) // Output writer to overwrite the original file with sorted values
+    val writer = createWriter(outputFilename)
 
     while (heap.isNotEmpty()) {
         val node = heap.popMin() // Get the current smallest number from all files
@@ -42,13 +44,10 @@ fun main() {
 
         val nextValue = nextLine.toInt()
         heap.insert(Node(node.fileIndex, nextValue)) // Insert the next number from that file into the heap
-        indexes[node.fileIndex]++ // Update the index tracker
     }
 
     // Close all file readers
-    for (reader in readers) {
-        reader.close()
-    }
+    readers.forEach { it.close() }
 
     writer.close() // Close output writer
 }
