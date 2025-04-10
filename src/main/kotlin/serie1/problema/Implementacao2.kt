@@ -17,7 +17,7 @@ import java.util.PriorityQueue
  * - args[1]: Path to the output file where sorted data will be written.
  * - args[2]: Partition size, i.e., number of elements per sorted chunk.
  */
-fun main2(args: Array<String>) {
+fun main(args: Array<String>) {
     val inputFilename = args[0]
     val outputFilename = args[1]
     val partitionSize = args[2].toInt()
