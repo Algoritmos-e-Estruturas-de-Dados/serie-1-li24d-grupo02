@@ -1,6 +1,7 @@
 package parte1
 
 import kotlin.math.absoluteValue
+import kotlin.math.ceil
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 1.1
@@ -105,9 +106,6 @@ fun counter(v: IntArray, k: Int, lower: Int, upper: Int): Pair<Int, Int> {
  *
  * @param fileName The name of the file to read.
  * @return The total number of integers (lines) in the file.
- *
- * @throws FileNotFoundException If the specified file does not exist or cannot be opened.
- * @throws IOException If an error occurs while reading the file.
  */
 fun getFileSize(fileName: String): Int {
     val reader = createReader(fileName)
