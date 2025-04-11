@@ -1,4 +1,4 @@
-package parte1
+package serie1.problema
 
 import kotlin.math.absoluteValue
 import kotlin.math.ceil
@@ -20,6 +20,7 @@ import kotlin.math.ceil
  * @return The minimum absolute difference between any pair of elements
  *         from the two arrays, or -1 if either array is empty.
  */
+@Suppress("UNUSED")
 fun findMinDifference(elem1: IntArray, elem2: IntArray): Int {
     // If any of the arrays are empty
     if (elem1.isEmpty() or elem2.isEmpty())
@@ -28,13 +29,13 @@ fun findMinDifference(elem1: IntArray, elem2: IntArray): Int {
     // Initialize minDiff to the absolute value of the first element of each array to achieve desired initialization
     var minDiff: Int = (elem1[0] - elem2[0]).absoluteValue
 
-    // Nested loop to match every element of each array to eachother
+    // Nested loop to match every element of each array to each other
     for (i in elem1.indices) {
         for (j in elem2.indices) {
             val diff = (elem1[i] - elem2[j]).absoluteValue // Formula for absolute difference
 
-            // Update minimum absolute difference to curent difference if the current one is closer to 0 than than the minimum
-            if (diff < minDiff) 
+            // Update minimum absolute difference to current difference if the current one is closer to 0 than the minimum
+            if (diff < minDiff)
                 minDiff = diff
         }
     }
@@ -45,7 +46,7 @@ fun findMinDifference(elem1: IntArray, elem2: IntArray): Int {
 // 1.2
 
 /**
- * Counts the number of contiguous subarrays of length `k` whose sums
+ * Counts the number of contiguous sub-arrays of length `k` whose sums
  * fall below a given `lower` bound or exceed an `upper` bound.
  *
  * The function computes the sum of the first `k` elements and then
@@ -55,29 +56,30 @@ fun findMinDifference(elem1: IntArray, elem2: IntArray): Int {
  * sums are below `lower` and how many exceed `upper`.
  *
  * @param v The input array of integers.
- * @param k The size of the subarrays to consider.
+ * @param k The size of the sub-arrays to consider.
  * @param lower The lower bound for the subarray sum.
  * @param upper The upper bound for the subarray sum.
- * @return A pair where the first value is the count of subarrays
+ * @return A pair where the first value is the count of sub-arrays
  *         with sums below `lower`, and the second value is the count
- *         of subarrays with sums above `upper`.
+ *         of sub-arrays with sums above `upper`.
  */
+@Suppress("UNUSED")
 fun counter(v: IntArray, k: Int, lower: Int, upper: Int): Pair<Int, Int> {
     var subarrayAmountLower = 0
     var subarrayAmountUpper = 0
 
     var sum = 0
-    for (j in 0..<k)   // Initialize beggining sum
+    for (j in 0..<k)   // Initialize beginning sum
         sum += v[j]
-    
+
 
     // Update final pair's values according to sum
     if (sum < lower)
         subarrayAmountLower++
-    
+
     else if (sum > upper)
         subarrayAmountUpper++
-    
+
 
     // Iterate through array without surpassing (array's last index - k) to not go out of bounds because of summing iteration method
     for (i in 0..v.lastIndex - k) {
@@ -87,7 +89,7 @@ fun counter(v: IntArray, k: Int, lower: Int, upper: Int): Pair<Int, Int> {
         // Update final pair's values according to sum
         if (sum < lower)
             subarrayAmountLower++
-        
+
         else if (sum > upper)
             subarrayAmountUpper++
     }
@@ -116,24 +118,6 @@ fun getFileSize(fileName: String): Int {
     return count
 }
 
-/**
- * Reads a chunk of integers from a [BufferedReader] and returns them as an [IntArray].
- *
- * This function reads [chunkSize] lines from the [BufferedReader], converts each line to an integer,
- * and returns an array of those integers.
- *
- * @receiver The [BufferedReader] from which the integers will be read.
- * @param chunkSize The number of integers (lines) to read.
- * @return An [IntArray] containing the integers read from the file.
- */
-fun BufferedReader.readIntChunk(chunkSize: Int): IntArray {
-    val numbers = IntArray(chunkSize)
-        for (i in 0 until chunkSize) {
-            val line = readLine()
-            numbers[i] = line.toInt()
-        }
-    return numbers
-}
 
 /**
  * Sorts this partition using Merge Sort and writes the sorted result to a file.
@@ -182,7 +166,7 @@ fun createSortedPartitions(fileName: String, partitionSize: Int): Int {
         numbers.processPartition(i)   // Sort and write chunk into file
     }
 
-    // Diferent reading for the last file because of the rest amount of numbers to read
+    // Different reading for the last file because of the rest amount of numbers to read
     val numbers = reader.readIntChunk(n - (numWays - 1) * partitionSize)
     numbers.processPartition(numWays)
 
@@ -206,14 +190,14 @@ fun IntArray.mergeSort() = mergeSortHelper()
 /**
  * Iteratively sorts this [IntArray] using Merge Sort.
  *
- * This function employs a bottom-up approach, progressively merging subarrays of increasing size
+ * This function employs a bottom-up approach, progressively merging sub-arrays of increasing size
  * until the entire array is sorted.
  *
  * @receiver The integer array being sorted.
  */
 fun IntArray.mergeSortHelper() {
     val n = this.size
-    var width = 1  // Width of the subarrays to be merged
+    var width = 1  // Width of the sub-arrays to be merged
 
     // Double the width each iteration until it covers the entire array
     while (width < n) {
@@ -222,10 +206,10 @@ fun IntArray.mergeSortHelper() {
             val mid = i + width - 1
             val rightEnd = minOf(i + 2 * width - 1, n - 1)
 
-            // Merge two adjacent subarrays of size `width`
+            // Merge two adjacent sub-arrays of size `width`
             merge(i, mid, rightEnd)
 
-            i += 2 * width  // Move to the next pair of subarrays
+            i += 2 * width  // Move to the next pair of sub-arrays
         }
         width *= 2  // Increase subarray size for the next iteration
     }
@@ -233,14 +217,14 @@ fun IntArray.mergeSortHelper() {
 
 
 /**
- * Merges two sorted subarrays of this [IntArray] into a single sorted sequence.
+ * Merges two sorted sub-arrays of this [IntArray] into a single sorted sequence.
  *
- * The subarrays are defined by the indices [l] (left boundary), [mid] (middle point), and [r] (right boundary).
+ * The sub-arrays are defined by the indices [l] (left boundary), [mid] (middle point), and [r] (right boundary).
  * The first subarray spans from index `l` to `mid`, and the second subarray spans from `mid + 1` to `r`.
  *
  * This function modifies the original array in place by merging the two sorted halves.
  *
- * @receiver The integer array containing the two sorted subarrays to merge.
+ * @receiver The integer array containing the two sorted sub-arrays to merge.
  * @param l The starting index of the first sorted subarray.
  * @param mid The ending index of the first sorted subarray, and midpoint of the full range.
  * @param r The ending index of the second sorted subarray.
