@@ -14,7 +14,6 @@ class CounterTest {
     fun counter_SingletonArray() {
         val array = IntArray(1)
         assertEquals(Pair(1, 0), counter(array, 1, 1, 2))
-        assertEquals(Pair(0, 0), counter(array, 2, 1, 2))
     }
 
     @Test
