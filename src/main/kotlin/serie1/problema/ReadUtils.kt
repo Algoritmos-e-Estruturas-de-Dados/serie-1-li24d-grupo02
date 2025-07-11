@@ -26,7 +26,7 @@ fun createWriter(fileName: String): PrintWriter {
 fun BufferedReader.readIntChunk(chunkSize: Int): IntArray {
     val numbers = IntArray(chunkSize)
     for (i in 0 until chunkSize) {
-        val line = kotlin.io.readLine()
+        val line = readLine()
         numbers[i] = line!!.toInt()
     }
     return numbers
